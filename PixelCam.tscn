@@ -1,0 +1,107 @@
+[gd_scene load_steps=11 format=3 uid="uid://b7s2ne36tn76b"]
+
+[ext_resource type="Script" path="res://Code/Rendering/3DPixelCam.gd" id="1_2w0tk"]
+[ext_resource type="Material" uid="uid://c6l6sc656khqv" path="res://Art/ObstacleMaterial.tres" id="1_agp8i"]
+[ext_resource type="Script" path="res://Code/Miscellaneous/FreeCam.gd" id="2_rhevu"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ejss7"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_owvug"]
+sky_material = SubResource("ProceduralSkyMaterial_ejss7")
+
+[sub_resource type="Environment" id="Environment_lflgj"]
+background_mode = 2
+sky = SubResource("Sky_owvug")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0pvek"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_0hn03"]
+size = Vector3(1, 3, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_80j7p"]
+radius = 2.0
+height = 4.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_30v7u"]
+viewport_path = NodePath("UI/SubViewportContainer/SubViewport")
+
+[node name="Scene" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_lflgj")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_split_1 = 0.01
+directional_shadow_split_2 = 0.1
+directional_shadow_split_3 = 0.25
+
+[node name="Obstacle" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+material_override = ExtResource("1_agp8i")
+mesh = SubResource("PlaneMesh_0pvek")
+
+[node name="Obstacle2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+material_override = ExtResource("1_agp8i")
+mesh = SubResource("BoxMesh_0hn03")
+skeleton = NodePath(".")
+
+[node name="Obstacle3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.639336, 0.4272, 0.639336, -0.302076, 0.904157, -0.302076, -0.707107, 1.78814e-07, 0.707107, 2, 0.975035, 0)
+material_override = ExtResource("1_agp8i")
+mesh = SubResource("BoxMesh_0hn03")
+skeleton = NodePath(".")
+
+[node name="Obstacle4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.353304, 0.0740366, -0.932574, -0.158587, 0.977696, 0.137699, 0.921969, 0.196544, -0.333683, -2.08057, 0.975035, 1.54252)
+material_override = ExtResource("1_agp8i")
+mesh = SubResource("BoxMesh_0hn03")
+skeleton = NodePath(".")
+
+[node name="Obstacle5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.146245, -0.400377, 0.713103)
+material_override = ExtResource("1_agp8i")
+mesh = SubResource("SphereMesh_80j7p")
+skeleton = NodePath(".")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="UI/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(642, 362)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="UI/SubViewportContainer/SubViewport" node_paths=PackedStringArray("cam_proxy", "render_texture")]
+transform = Transform3D(-1, -6.18172e-08, -6.18172e-08, 0, 0.707107, -0.707107, 8.74228e-08, -0.707107, -0.707107, 0, 6, 7)
+projection = 1
+current = true
+size = 10.0
+far = 100.0
+script = ExtResource("1_2w0tk")
+cam_proxy = NodePath("../../../../CameraProxy")
+render_texture = NodePath("../../../RenderTexture")
+
+[node name="RenderTexture" type="TextureRect" parent="UI"]
+layout_mode = 0
+offset_right = 642.0
+offset_bottom = 362.0
+texture = SubResource("ViewportTexture_30v7u")
+
+[node name="CameraProxy" type="Node3D" parent="."]
+transform = Transform3D(0.707107, -0.316613, 0.632262, 0, 0.894154, 0.447759, -0.707107, -0.316613, 0.632262, 0, 6, 7)
+script = ExtResource("2_rhevu")
