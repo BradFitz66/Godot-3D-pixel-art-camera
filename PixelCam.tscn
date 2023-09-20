@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://b7s2ne36tn76b"]
+[gd_scene load_steps=12 format=3 uid="uid://b7s2ne36tn76b"]
 
 [ext_resource type="Script" path="res://Code/Rendering/3DPixelCam.gd" id="1_2w0tk"]
 [ext_resource type="Material" uid="uid://c6l6sc656khqv" path="res://Art/ObstacleMaterial.tres" id="1_agp8i"]
+[ext_resource type="Material" uid="uid://f8bwp3dbusxj" path="res://Art/ObstacleMaterial_TriPlanar.tres" id="1_wejfa"]
 [ext_resource type="Script" path="res://Code/Miscellaneous/FreeCam.gd" id="2_rhevu"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ejss7"]
@@ -37,30 +38,31 @@ environment = SubResource("Environment_lflgj")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
+shadow_blur = 5.0
 directional_shadow_split_1 = 0.01
 directional_shadow_split_2 = 0.1
 directional_shadow_split_3 = 0.25
 
 [node name="Obstacle" type="MeshInstance3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
-material_override = ExtResource("1_agp8i")
+material_override = ExtResource("1_wejfa")
 mesh = SubResource("PlaneMesh_0pvek")
 
 [node name="Obstacle2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-material_override = ExtResource("1_agp8i")
+material_override = ExtResource("1_wejfa")
 mesh = SubResource("BoxMesh_0hn03")
 skeleton = NodePath(".")
 
 [node name="Obstacle3" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.639336, 0.4272, 0.639336, -0.302076, 0.904157, -0.302076, -0.707107, 1.78814e-07, 0.707107, 2, 0.975035, 0)
-material_override = ExtResource("1_agp8i")
+material_override = ExtResource("1_wejfa")
 mesh = SubResource("BoxMesh_0hn03")
 skeleton = NodePath(".")
 
 [node name="Obstacle4" type="MeshInstance3D" parent="."]
 transform = Transform3D(-0.353304, 0.0740366, -0.932574, -0.158587, 0.977696, 0.137699, 0.921969, 0.196544, -0.333683, -2.08057, 0.975035, 1.54252)
-material_override = ExtResource("1_agp8i")
+material_override = ExtResource("1_wejfa")
 mesh = SubResource("BoxMesh_0hn03")
 skeleton = NodePath(".")
 
