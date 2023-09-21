@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Code/Rendering/3DPixelCam.gd" id="1_2w0tk"]
 [ext_resource type="Material" uid="uid://c6l6sc656khqv" path="res://Art/ObstacleMaterial.tres" id="1_agp8i"]
 [ext_resource type="Material" uid="uid://f8bwp3dbusxj" path="res://Art/ObstacleMaterial_TriPlanar.tres" id="1_wejfa"]
-[ext_resource type="Script" path="res://Code/Miscellaneous/FollowPlayer.gd" id="4_50dbr"]
+[ext_resource type="Script" path="res://Code/Rendering/3DPixelCamDisplay.gd" id="4_w36h7"]
 [ext_resource type="Script" path="res://Code/Miscellaneous/SimpleCharacterController.gd" id="5_eknrk"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ejss7"]
@@ -40,12 +40,12 @@ height = 4.0
 [sub_resource type="SphereShape3D" id="SphereShape3D_7841g"]
 radius = 2.0
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_30v7u"]
-viewport_path = NodePath("UI/SubViewportContainer/SubViewport")
-
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_dowi3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o8o4p"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_x6k7b"]
+viewport_path = NodePath("SubViewport")
 
 [node name="Scene" type="Node3D"]
 
@@ -68,7 +68,6 @@ mesh = SubResource("PlaneMesh_0pvek")
 [node name="StaticBody3D" type="StaticBody3D" parent="Obstacle"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacle/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_bexqa")
 
 [node name="Obstacle2" type="MeshInstance3D" parent="."]
@@ -80,7 +79,6 @@ skeleton = NodePath(".")
 [node name="StaticBody3D" type="StaticBody3D" parent="Obstacle2"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacle2/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_pi7k0")
 
 [node name="Obstacle3" type="MeshInstance3D" parent="."]
@@ -92,7 +90,6 @@ skeleton = NodePath(".")
 [node name="StaticBody3D" type="StaticBody3D" parent="Obstacle3"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacle3/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_70m3s")
 
 [node name="Obstacle4" type="MeshInstance3D" parent="."]
@@ -102,10 +99,8 @@ mesh = SubResource("BoxMesh_0hn03")
 skeleton = NodePath(".")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Obstacle4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacle4/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_70m3s")
 
 [node name="Obstacle5" type="MeshInstance3D" parent="."]
@@ -117,59 +112,19 @@ skeleton = NodePath(".")
 [node name="StaticBody3D" type="StaticBody3D" parent="Obstacle5"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacle5/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("SphereShape3D_7841g")
 
-[node name="UI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="UI"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="SubViewport" type="SubViewport" parent="UI/SubViewportContainer"]
-handle_input_locally = false
-size = Vector2i(428, 242)
-render_target_update_mode = 4
-
-[node name="Camera3D" type="Camera3D" parent="UI/SubViewportContainer/SubViewport" node_paths=PackedStringArray("cam_proxy", "cam", "render_texture")]
-transform = Transform3D(0.707107, -0.316614, 0.632263, 0, 0.894154, 0.447759, -0.707107, -0.316614, 0.632263, 0, 6, 7)
-projection = 1
-current = true
-size = 8.0
-far = 100.0
-script = ExtResource("1_2w0tk")
-cam_proxy = NodePath("../../../../CameraProxyRoot/CameraProxy")
-cam = NodePath(".")
-render_texture = NodePath("../../../RenderTexture")
-
-[node name="RenderTexture" type="TextureRect" parent="UI"]
-texture_filter = 1
-texture_repeat = 1
-layout_mode = 0
-offset_right = 429.0
-offset_bottom = 242.0
-texture = SubResource("ViewportTexture_30v7u")
-
-[node name="CameraProxyRoot" type="Node3D" parent="." node_paths=PackedStringArray("Player")]
-transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, -1.49012e-07, -4.76837e-07, -5)
-script = ExtResource("4_50dbr")
-Player = NodePath("../Player")
-
-[node name="CameraProxy" type="Node3D" parent="CameraProxyRoot"]
-transform = Transform3D(0.707107, -0.316613, 0.632262, 0, 0.894154, 0.447759, -0.707107, -0.316613, 0.632262, 9, 9, 9)
-
 [node name="Player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camera")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, -5)
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
 script = ExtResource("5_eknrk")
-camera = NodePath("../UI/SubViewportContainer/SubViewport/Camera3D")
+camera = NodePath("../SubViewport/Camera3D")
+
+[node name="CameraProxy" type="RemoteTransform3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 7, 10)
+remote_path = NodePath("../../SubViewport/Camera3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -178,3 +133,28 @@ mesh = SubResource("CapsuleMesh_dowi3")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_o8o4p")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(322, 182)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(0.707107, -0.353554, 0.612372, 0, 0.866025, 0.5, -0.707107, -0.353554, 0.612372, 7.07107, 7, 2.07107)
+projection = 1
+current = true
+size = 8.0
+far = 100.0
+script = ExtResource("1_2w0tk")
+
+[node name="UI" type="Control" parent="." node_paths=PackedStringArray("viewport")]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("4_w36h7")
+viewport = NodePath("../SubViewport")
+
+[node name="Display" type="Sprite2D" parent="UI"]
+texture_filter = 1
+texture = SubResource("ViewportTexture_x6k7b")
+centered = false
