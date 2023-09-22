@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://b7s2ne36tn76b"]
+[gd_scene load_steps=21 format=3 uid="uid://b7s2ne36tn76b"]
 
 [ext_resource type="Script" path="res://Code/Rendering/3DPixelCam.gd" id="1_2w0tk"]
 [ext_resource type="Material" uid="uid://c6l6sc656khqv" path="res://Art/ObstacleMaterial.tres" id="1_agp8i"]
 [ext_resource type="Material" uid="uid://f8bwp3dbusxj" path="res://Art/ObstacleMaterial_TriPlanar.tres" id="1_wejfa"]
 [ext_resource type="Script" path="res://Code/Rendering/3DPixelCamDisplay.gd" id="4_w36h7"]
 [ext_resource type="Script" path="res://Code/Miscellaneous/SimpleCharacterController.gd" id="5_eknrk"]
+[ext_resource type="Shader" path="res://Code/Shaders/PixelArtUpscale.gdshader" id="6_23jh1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ejss7"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -43,6 +44,9 @@ radius = 2.0
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_dowi3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o8o4p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3v7y2"]
+shader = ExtResource("6_23jh1")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_x6k7b"]
 viewport_path = NodePath("SubViewport")
@@ -155,6 +159,7 @@ script = ExtResource("4_w36h7")
 viewport = NodePath("../SubViewport")
 
 [node name="Display" type="Sprite2D" parent="UI"]
-texture_filter = 1
+texture_filter = 2
+material = SubResource("ShaderMaterial_3v7y2")
 texture = SubResource("ViewportTexture_x6k7b")
 centered = false
