@@ -28,7 +28,7 @@ func _physics_process(delta):
 	#Set velocity and move
 	velocity = Vector3(
 					direction.x * speed,
-					velocity.y - gravity * delta,
+					0,
 					direction.z * speed
 				)
 
